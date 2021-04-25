@@ -12,7 +12,7 @@ def create_table(cur, conn):
 
 
 def db_connect():
-    conn = sqlite3.connect(config.db_path, check_same_thread=False)
+    conn = sqlite3.connect(db_path, check_same_thread=False)
     cur = conn.cursor()
     create_table(cur, conn)
     return cur, conn
