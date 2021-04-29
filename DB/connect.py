@@ -1,30 +1,6 @@
-# import sqlite3
-from flask_sqlalchemy import SQLAlchemy
-from app import app
-import os
-from datetime import datetime
+import sqlite3
 
-db_path = os.getenv("DB_PATH", "/home/shaylevin89/mysite/DB/forecast.db")
-
-SQLALCHEMY_DATABASE_URI = f"sqlite://{db_path}"
-app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
-app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-db = SQLAlchemy(app)
-
-
-class Forecast(db.Model):
-    __tablename__ = "forecast"
-    Longitude = db.Column(db.Float)
-    Latitude = db.Column(db.Float)
-    forecast_time = db.Column(db.DateTime, default=datetime.now)
-    Temperature_Celsius = db.Column(db.Float)
-    Precipitation_Rate = db.Column(db.Float)
-
-
-print(Forecast.query())
-
+db_path = "/home/shaylevin89/mysite/DB/forecast.db"
 
 columns = ['Longitude', 'Latitude', 'forecast_time', 'Temperature_Celsius', 'Precipitation_Rate']
 
