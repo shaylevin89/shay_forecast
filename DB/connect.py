@@ -1,6 +1,7 @@
 import sqlite3
+import os
 
-db_path = "/home/shaylevin89/mysite/DB/forecast.db"
+db_path = os.getenv("DB_PATH", "/home/shaylevin89/mysite/DB/forecast.db")
 
 columns = ['Longitude', 'Latitude', 'forecast_time', 'Temperature_Celsius', 'Precipitation_Rate']
 
