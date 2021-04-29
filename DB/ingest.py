@@ -25,7 +25,7 @@ def insert_csv_to_db(file_name):
 
 
 def file_uploader():
-    """csv_files dir should contain the csv files for upload"""
+    # csv_files dir should contain the csv files for upload
     files = os.listdir(f'{path}/csv_files/')
     for file in files:
         insert_csv_to_db(file)

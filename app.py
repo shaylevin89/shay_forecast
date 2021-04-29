@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 import logging
 from DB import db_request, connect
-import coordinate_validation
 import forecast_summery
 
 
@@ -23,6 +22,17 @@ def get_args(request_args):
     return lon, lat
 
 
+def lon_lat_check_and_round(lon, lat):
+    try:
+        lon = round(float(lon)*2)/2
+        lat = round(float(lat)*2)/2
+        if -180 <= lon <= 180 and -90 <= lat <= 90:
+            return lon, lat
+        return None, None
+    except Exception:
+        return None, None
+
+
 app = Flask(__name__)
 
 
@@ -31,7 +41,7 @@ def data():
     lon, lat = get_args(request.args)
     if not lon or not lat:
         return jsonify(errors['no_args']), 400
-    lon, lat = coordinate_validation.lon_lat_check_and_round(lon, lat)
+    lon, lat = lon_lat_check_and_round(lon, lat)
     if not lon or not lat:
         return jsonify(errors['wrong_value']), 400
     forecasts = db_request.get_forecast(lon, lat)
@@ -51,7 +61,7 @@ def summarize():
     lon, lat = get_args(request.args)
     if not lon or not lat:
         return jsonify(errors['no_args']), 400
-    lon, lat = coordinate_validation.lon_lat_check_and_round(lon, lat)
+    lon, lat = lon_lat_check_and_round(lon, lat)
     if not lon or not lat:
         return jsonify(errors['wrong_value']), 400
     summarize_dict = forecast_summery.generate(lon, lat)
